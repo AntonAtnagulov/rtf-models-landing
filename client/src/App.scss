@@ -3,12 +3,11 @@
 }
 
 ::-webkit-scrollbar {
-  width: 10px; /* ширина для вертикального скролла */
-  height: 8px; /* высота для горизонтального скролла */
+  width: 10px;
+  height: 8px;
   background-color: #14386100;
 }
 
-/* ползунок скроллбара */
 ::-webkit-scrollbar-thumb {
   background-color: #23232a;
   border-radius: 12px;
