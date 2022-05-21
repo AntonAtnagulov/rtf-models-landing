@@ -6,7 +6,7 @@ import state from './components/State';
 import { Section } from './components/Section';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Html, useGLTF } from '@react-three/drei';
-
+import { useInView } from 'react-intersection-observer';
 
 const Model = ({ modelPath }) => {
     const gltf = useGLTF(modelPath, true);
@@ -24,11 +24,16 @@ const Lights = () => {
     );
 };
 
-const HtmlContent = ({ domContent, children, modelPath, positionY }) => {
+const HtmlContent = ({bgColor, domContent, children, modelPath, positionY }) => {
     const ref = useRef();
     useFrame(() => {
         ref.current.rotation.y += 0.01;
     });
+    const [refItem, inView] = useInView();
+
+    useEffect(() => {
+        inView && (document.body.style.background = bgColor)
+    }, [inView])
 
     return (
         <Section factor={1.5} offset={1}>
@@ -36,19 +41,21 @@ const HtmlContent = ({ domContent, children, modelPath, positionY }) => {
                 <mesh ref={ref} position={[0, -35, 0]}>
                     <Model modelPath={modelPath} />
                 </mesh>
-                <Html portal={domContent} fullscreen>{children}</Html>
+                <Html portal={domContent} fullscreen>
+                    <div className='container' ref={refItem}>{children}</div>
+                </Html>
             </group>
         </Section>
     );
 };
 
 function App() {
-  const domContent = useRef()
+    const domContent = useRef();
 
-  const scrollArea = useRef()
-  const onScroll = (e) => (state.top.current = e.target.scrollTop)
+    const scrollArea = useRef();
+    const onScroll = (e) => (state.top.current = e.target.scrollTop);
 
-  useEffect(() => void onScroll({ target: scrollArea.current }), [])
+    useEffect(() => void onScroll({ target: scrollArea.current }), []);
 
     return (
         <>
@@ -56,28 +63,46 @@ function App() {
             <Canvas colorManagment camera={{ position: [0, 0, 120], fov: 70 }}>
                 <Lights />
                 <Suspense fallback={null}>
-                    <HtmlContent domContent={domContent} modelPath="/Yellow.gltf" positionY={250}>
+                    <HtmlContent
+                        domContent={domContent}
+                        modelPath="/Yellow.gltf"
+                        positionY={250}
+                        bgColor={'#f15946'}
+                    >
                         <div className="container">
                             <h1 className="title">Yellow</h1>
                         </div>
                     </HtmlContent>
 
-                    <HtmlContent domContent={domContent} modelPath="/Green.gltf" positionY={0}>
+                    <HtmlContent
+                        domContent={domContent}
+                        modelPath="/Green.gltf"
+                        positionY={0}
+                        bgColor={'#571ec1'}
+                    >
                         <div className="container">
                             <h1 className="title">Green</h1>
                         </div>
                     </HtmlContent>
 
-                    <HtmlContent domContent={domContent} modelPath="/Grey.gltf" positionY={-250}>
+                    <HtmlContent
+                        domContent={domContent}
+                        modelPath="/Grey.gltf"
+                        positionY={-250}
+                        bgColor={'#636567'}
+                    >
                         <div className="container">
                             <h1 className="title">Grey</h1>
                         </div>
                     </HtmlContent>
                 </Suspense>
             </Canvas>
-            <div className='scrollArea' ref={scrollArea} onScroll={onScroll}>
-              <div style={{position: 'sticky', top: 0}} ref={domContent}></div>
-              <div style={{height: `${state.sections * 100}vh`}}></div>
+            <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
+                <div
+                    style={{ position: 'sticky', top: 0 }}
+                    ref={domContent}
+                ></div>
+                <div style={{ height: `${state.sections * 100}vh` }}></div>
             </div>
         </>
     );
