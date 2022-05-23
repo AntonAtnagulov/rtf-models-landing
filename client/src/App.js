@@ -1,11 +1,15 @@
 import './App.scss';
 import React, { Suspense, useRef, useEffect } from 'react';
+
 import Header from './components/Header';
 import state from './components/State';
 
 import { Section } from './components/Section';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Html, useGLTF } from '@react-three/drei';
+import { Html, useGLTF, useProgress } from '@react-three/drei';
+
+import { a, useTransition } from '@react-spring/web';
+
 import { useInView } from 'react-intersection-observer';
 
 const Model = ({ modelPath }) => {
@@ -17,14 +21,21 @@ const Lights = () => {
     return (
         <>
             <ambientLight intensity={0.3} />
-            <directionalLight position={[10, 10, 5]} intensity={0.7} />
-            <directionalLight position={[0, 10, 0]} intensity={0.6} />
+            <directionalLight position={[10, 10, 5]} intensity={1} />
+            <directionalLight position={[0, 5, 10]} intensity={0.8} />
             <spotLight intensity={0.5} position={[1000, 0, 0]} />
         </>
     );
 };
 
-const HtmlContent = ({bgColor, domContent, children, modelPath, positionY }) => {
+const HtmlContent = ({
+    domContent,
+    children,
+    modelPath,
+    positionY,
+    scale,
+    bgColor,
+}) => {
     const ref = useRef();
     useFrame(() => {
         ref.current.rotation.y += 0.01;
@@ -32,22 +43,49 @@ const HtmlContent = ({bgColor, domContent, children, modelPath, positionY }) => 
     const [refItem, inView] = useInView();
 
     useEffect(() => {
-        inView && (document.body.style.background = bgColor)
-    }, [inView])
+        inView && (document.body.style.background = bgColor);
+    }, [inView]);
 
     return (
         <Section factor={1.5} offset={1}>
             <group position={[0, positionY, 0]}>
-                <mesh ref={ref} position={[0, -35, 0]}>
+                <mesh ref={ref} position={[0, -35, 0]} scale={scale}>
                     <Model modelPath={modelPath} />
                 </mesh>
                 <Html portal={domContent} fullscreen>
-                    <div className='container' ref={refItem}>{children}</div>
+                    <div className="container" ref={refItem}>
+                        {children}
+                    </div>
                 </Html>
             </group>
         </Section>
     );
 };
+
+function Loader() {
+    const { active, progress } = useProgress();
+    const transition = useTransition(active, {
+        from: { opacity: 1, progress: 0 },
+        leave: { opacity: 0 },
+        update: { progress },
+    });
+    return transition(
+        ({ progress, opacity }, active) =>
+            active && (
+                <>
+                <a.div className="loading" style={{ opacity }}>
+                    <div className="loading-bar-container">
+                        <a.div
+                            className="loading-bar"
+                            style={{ width: progress }}
+                        ></a.div>
+                    <h6 className="loading-text">loading...</h6>
+                    </div>
+                </a.div>
+                </>
+            )
+    );
+}
 
 function App() {
     const domContent = useRef();
@@ -60,28 +98,37 @@ function App() {
     return (
         <>
             <Header />
-            <Canvas colorManagment camera={{ position: [0, 0, 120], fov: 70 }}>
+            <Canvas colorManagment camera={{ position: [0, 0, 180], fov: 50 }}>
                 <Lights />
                 <Suspense fallback={null}>
                     <HtmlContent
                         domContent={domContent}
-                        modelPath="/Yellow.gltf"
+                        modelPath="/gltfPistolFinal/PistolSSP.gltf"
                         positionY={250}
-                        bgColor={'#f15946'}
+                        scale={0.015}
+                        bgColor={'#736f68'}
                     >
                         <div className="container">
-                            <h1 className="title">Yellow</h1>
+                            <h1 className="title">H&K 2027</h1>
+                            <h6 className="text">
+                                Long barrel pistol after WW3
+                            </h6>
                         </div>
                     </HtmlContent>
 
                     <HtmlContent
                         domContent={domContent}
-                        modelPath="/Green.gltf"
+                        modelPath="/gltfSMGFinal/PBR - Metallic Roughness.glb"
                         positionY={0}
-                        bgColor={'#571ec1'}
+                        scale={0.011}
+                        bgColor={'#2d2e2d'}
                     >
                         <div className="container">
-                            <h1 className="title">Green</h1>
+                            <h1 className="title">AS 205 SMG</h1>
+                            <h6 className="text">
+                                Bullpup SMG designed for combat outside the
+                                atmosphere
+                            </h6>
                         </div>
                     </HtmlContent>
 
@@ -89,6 +136,7 @@ function App() {
                         domContent={domContent}
                         modelPath="/Grey.gltf"
                         positionY={-250}
+                        scale={1}
                         bgColor={'#636567'}
                     >
                         <div className="container">
@@ -97,6 +145,7 @@ function App() {
                     </HtmlContent>
                 </Suspense>
             </Canvas>
+            <Loader />
             <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
                 <div
                     style={{ position: 'sticky', top: 0 }}
@@ -109,3 +158,4 @@ function App() {
 }
 
 export default App;
+
