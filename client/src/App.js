@@ -6,10 +6,9 @@ import state from './components/State';
 
 import { Section } from './components/Section';
 import { Canvas, useFrame } from '@react-three/fiber';
+
 import { Html, useGLTF, useProgress } from '@react-three/drei';
-
 import { a, useTransition } from '@react-spring/web';
-
 import { useInView } from 'react-intersection-observer';
 
 const Model = ({ modelPath }) => {
@@ -22,7 +21,7 @@ const Lights = () => {
         <>
             <ambientLight intensity={0.3} />
             <directionalLight position={[10, 10, 5]} intensity={1} />
-            <directionalLight position={[0, 5, 10]} intensity={0.8} />
+            <directionalLight position={[0, 5, 10]} intensity={0.8}z />
             <spotLight intensity={0.5} position={[1000, 0, 0]} />
         </>
     );
@@ -122,6 +121,7 @@ function App() {
                         positionY={0}
                         scale={0.011}
                         bgColor={'#2d2e2d'}
+
                     >
                         <div className="container">
                             <h1 className="title">AS 205 SMG</h1>
@@ -137,6 +137,7 @@ function App() {
                         modelPath="/Grey.gltf"
                         positionY={-250}
                         scale={1}
+
                         bgColor={'#636567'}
                     >
                         <div className="container">
@@ -158,4 +159,3 @@ function App() {
 }
 
 export default App;
-
