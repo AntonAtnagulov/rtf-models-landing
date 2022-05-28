@@ -21,7 +21,7 @@ const Lights = () => {
         <>
             <ambientLight intensity={0.3} />
             <directionalLight position={[10, 10, 5]} intensity={1} />
-            <directionalLight position={[0, 5, 10]} intensity={0.8}z />
+            <directionalLight position={[0, 5, 10]} intensity={0.8} z />
             <spotLight intensity={0.5} position={[1000, 0, 0]} />
         </>
     );
@@ -72,15 +72,15 @@ function Loader() {
         ({ progress, opacity }, active) =>
             active && (
                 <>
-                <a.div className="loading" style={{ opacity }}>
-                    <div className="loading-bar-container">
-                        <a.div
-                            className="loading-bar"
-                            style={{ width: progress }}
-                        ></a.div>
-                    <h6 className="loading-text">loading...</h6>
-                    </div>
-                </a.div>
+                    <a.div className="loading" style={{ opacity }}>
+                        <div className="loading-bar-container">
+                            <a.div
+                                className="loading-bar"
+                                style={{ width: progress }}
+                            ></a.div>
+                            <h6 className="loading-text">loading...</h6>
+                        </div>
+                    </a.div>
                 </>
             )
     );
@@ -108,7 +108,7 @@ function App() {
                         bgColor={'#736f68'}
                     >
                         <div className="container">
-                            <h1 className="title">H&K 2027</h1>
+                            <h1 className="title">ZX 2027</h1>
                             <h6 className="text">
                                 Long barrel pistol after WW3
                             </h6>
@@ -121,7 +121,6 @@ function App() {
                         positionY={0}
                         scale={0.011}
                         bgColor={'#2d2e2d'}
-
                     >
                         <div className="container">
                             <h1 className="title">AS 205 SMG</h1>
@@ -134,14 +133,17 @@ function App() {
 
                     <HtmlContent
                         domContent={domContent}
-                        modelPath="/Grey.gltf"
+                        modelPath="/SniperGLTF/SniperSPP.gltf"
                         positionY={-250}
-                        scale={1}
-
+                        scale={0.009}
                         bgColor={'#636567'}
                     >
                         <div className="container">
-                            <h1 className="title">Grey</h1>
+                            <h1 className="title">0.50 Sniper Rifle</h1>
+                            <h6 className="text">
+                                Bullpup SMG designed for combat outside the
+                                atmosphere
+                            </h6>
                         </div>
                     </HtmlContent>
                 </Suspense>
