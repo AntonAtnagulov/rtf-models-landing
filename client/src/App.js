@@ -141,8 +141,7 @@ function App() {
                         <div className="container">
                             <h1 className="title">0.50 Sniper Rifle</h1>
                             <h6 className="text">
-                                Bullpup SMG designed for combat outside the
-                                atmosphere
+                                0.50 sniper rifle for destroying lightly armored vehicles
                             </h6>
                         </div>
                     </HtmlContent>
