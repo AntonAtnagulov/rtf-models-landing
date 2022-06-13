@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://antonatnagulov.github.io/rtf-models-landing/",
   "dependencies": {
     "@react-spring/web": "^9.4.5",
     "@react-three/drei": "^9.11.2",

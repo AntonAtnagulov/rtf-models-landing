@@ -102,7 +102,7 @@ function App() {
                 <Suspense fallback={null}>
                     <HtmlContent
                         domContent={domContent}
-                        modelPath="/gltfPistolFinal/PistolSSP.gltf"
+                        modelPath="./gltfPistolFinal/PistolSSP.gltf"
                         positionY={250}
                         scale={0.015}
                         bgColor={'#736f68'}
@@ -117,7 +117,7 @@ function App() {
 
                     <HtmlContent
                         domContent={domContent}
-                        modelPath="/gltfSMGFinal/PBR - Metallic Roughness.glb"
+                        modelPath="./gltfSMGFinal/PBR - Metallic Roughness.glb"
                         positionY={0}
                         scale={0.011}
                         bgColor={'#2d2e2d'}
@@ -133,7 +133,7 @@ function App() {
 
                     <HtmlContent
                         domContent={domContent}
-                        modelPath="/SniperGLTF/SniperSPP.gltf"
+                        modelPath="./SniperGLTF/SniperSPP.gltf"
                         positionY={-250}
                         scale={0.009}
                         bgColor={'#636567'}
