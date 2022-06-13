@@ -10,14 +10,11 @@ export default function Header() {
         </div>
         <nav>
           <ul>
-            <li>
-              <a href='/'>models</a>
-            </li>
-            <li>
-              <a href='/'>about me</a>
+            <li className='btn'>
+              <a href='https://github.com/AntonAtnagulov'>GitHub</a>
             </li>
             <li className='btn'>
-              <a href='/'>contacts</a>
+              <a href='https://t.me/antonatnagulov'>Telegram</a>
             </li>
           </ul>
         </nav>
