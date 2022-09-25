@@ -110,7 +110,7 @@ function App() {
                         <div className="container">
                             <h1 className="title">ZX 2027</h1>
                             <h6 className="text">
-                                Long barrel pistol after WW3
+                                Long barrel pistol
                             </h6>
                         </div>
                     </HtmlContent>
